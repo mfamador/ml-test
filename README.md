@@ -1,4 +1,4 @@
-# Machine learning technical test
+# Machine learning tests
 
 The goal is to reliably predict the retailer name based on receipt ocr raw textual data. 
 The raw retailer name comes on the `establishment` inside the `rawData` field. 
