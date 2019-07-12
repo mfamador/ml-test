@@ -16,6 +16,8 @@ script_location = os.path.dirname(os.path.realpath(__file__))
 def train_and_save_model(dataset,
                          model_filename,
                          scaler_filename,
+                         tokenizer_filename,
+                         encoder_filename,
                          epochs,
                          batch_size):
 
@@ -40,11 +42,11 @@ def train_and_save_model(dataset,
     test_ocr = dataset['establishment'][train_size:]
     test_tags = dataset['retailerName'][train_size:]
 
-    max_words = 500
-    tokenize = text.Tokenizer(num_words=max_words, char_level=False)
-    tokenize.fit_on_texts(train_ocr)
-    x_train = tokenize.texts_to_matrix(train_ocr)
-    x_test = tokenize.texts_to_matrix(test_ocr)
+    max_words = 1000
+    tokenizer = text.Tokenizer(num_words=max_words, char_level=False)
+    tokenizer.fit_on_texts(train_ocr)
+    x_train = tokenizer.texts_to_matrix(train_ocr)
+    x_test = tokenizer.texts_to_matrix(test_ocr)
 
     # use sklearn utility to convert label strings to numbered index
     encoder = LabelEncoder()
@@ -72,10 +74,10 @@ def train_and_save_model(dataset,
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     # train the model
     model.fit(x_train, y_train,
-                        batch_size=batch_size,
-                        epochs=epochs,
-                        verbose=1,
-                        validation_split=0.1)
+              batch_size=batch_size,
+              epochs=epochs,
+              verbose=1,
+              validation_split=0.1)
     # evaluate the accuracy
     score = model.evaluate(x_test, y_test, batch_size=batch_size, verbose=1)
     print('Test score:', score[0])
@@ -89,8 +91,13 @@ def train_and_save_model(dataset,
         print(test_ocr.iloc[i][:50], "...")
         print('correct:' + test_tags.iloc[i])
         print("predicted: " + predicted_label + "\n")
-
+    # save the model
     model.save(model_filename)
+
+    with open(tokenizer_filename, 'wb') as handle:
+        pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    with open(encoder_filename, 'wb') as handle:
+        pickle.dump(encoder, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     scaler = MinMaxScaler()
     scaler.fit(x_train)
@@ -102,12 +109,16 @@ def train_and_save_model(dataset,
 def save_model(args):
     model_filename = args.output_folder + '/model.h5'
     scaler_filename = args.output_folder + '/scaler.p'
+    tokenizer_filename = args.output_folder + '/tokenizer.p'
+    encoder_filename = args.output_folder + '/encoder.p'
     dataset = pd.read_csv(args.input_dataset)
 
     print("Training a prediction model with all the \"establishment\" as features and  \"retailerName\" as labels")
     train_and_save_model(dataset,
                          model_filename,
                          scaler_filename,
+                         tokenizer_filename,
+                         encoder_filename,
                          epochs=args.epochs,
                          batch_size=args.batch_size)
 

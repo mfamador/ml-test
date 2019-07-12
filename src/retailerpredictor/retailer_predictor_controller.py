@@ -15,13 +15,18 @@ class RetailerPredictorController(object):
         logging.info("Received request retailer={} ".format(raw_retailer))
         print("Received request retailer={} ".format(raw_retailer))
 
-        retailer_prediction = self.predict_retailer(raw_retailer)
-        resp.status = falcon.HTTP_200
+        if len(raw_retailer) > 1:
+            retailer_prediction = self.predict_retailer(raw_retailer)
+            resp.status = falcon.HTTP_200
+        else:
+            retailer_prediction = 'you have to specify the retailer'
+            resp.status = falcon.HTTP_400
         resp.body = retailer_prediction
 
     def predict_retailer(self, feature):
         try:
             prediction = self.model.predict(feature)
+
             return prediction
         except Exception:
             logging.exception("Error predicting retailer for request.")
