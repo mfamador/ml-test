@@ -1,15 +1,12 @@
-# FROM python:3.6-slim
-#
-# RUN mkdir -p /usr/src/app
-# WORKDIR /usr/src/app
-#
-# RUN apt-get update && apt-get install -y git gcc
-# COPY requirements.txt /usr/src/app/
-# RUN pip3 install --no-cache-dir -r requirements.txt
-# RUN apt-get purge -y gcc git
+FROM python:3.6-slim
 
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-FROM wevat-predictor-base
+RUN apt-get update && apt-get install -y git gcc
+COPY requirements.txt /usr/src/app/
+RUN pip3 install --no-cache-dir -r requirements.txt
+RUN apt-get purge -y gcc git
 
 COPY . /usr/src/app
 

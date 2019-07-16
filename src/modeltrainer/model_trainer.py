@@ -94,14 +94,12 @@ def train_and_save_model(dataset,
     # save the model
     model.save(model_filename)
 
-    with open(tokenizer_filename, 'wb') as handle:
-        pickle.dump(tokenizer, handle, protocol=pickle.HIGHEST_PROTOCOL)
-    with open(encoder_filename, 'wb') as handle:
-        pickle.dump(encoder, handle, protocol=pickle.HIGHEST_PROTOCOL)
-
     scaler = MinMaxScaler()
     scaler.fit(x_train)
+
     pickle.dump(scaler, open(scaler_filename, 'wb'))
+    pickle.dump(tokenizer, open(tokenizer_filename, 'wb'))
+    pickle.dump(encoder, open(encoder_filename, 'wb'))
 
     print("Saved model!")
 
@@ -124,7 +122,7 @@ def save_model(args):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-e", "--epochs", type=int, default=2, help="The number of epochs to train")
+parser.add_argument("-e", "--epochs", type=int, default=4, help="The number of epochs to train")
 parser.add_argument("-b", "--batch_size", type=int, default=32, help="The batch size to use for training")
 parser.add_argument("-o", "--output_folder", type=str, default=f'{script_location}/../../resources', help="The folder to store the model in")
 parser.add_argument("-i", "--input_dataset", type=str, help="The dataset to train with", required=True)

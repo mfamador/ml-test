@@ -24,9 +24,9 @@ class Model:
     def __init__(self, resource_path):
         self.resource_path = resource_path
         self.model = self.__load_model()
-        self.scaler = self.__load_scaler()
-        self.tokenizer = self.__load_tokenizer()
-        self.encoder = self.__load_encoder()
+        self.scaler = self.__load_resource(SCALER_NAME)
+        self.tokenizer = self.__load_resource(TOKENIZER_NAME)
+        self.encoder = self.__load_resource(ENCODER_NAME)
         self.graph = tf.get_default_graph()
 
     def predict(self, feature):
@@ -46,6 +46,7 @@ class Model:
     def __transform_output(self, prediction):
 
         predicted_index = np.argmax(prediction)
+        print("prediction {0}".format(prediction))
         print("max arg: {0}".format(predicted_index))
         print(self.encoder.classes_)
         prediction_label = self.encoder.classes_[predicted_index]
@@ -63,39 +64,14 @@ class Model:
             logging.exception(error_message)
             raise ModelException(error_message)
 
-    def __load_scaler(self):
+    def __load_resource(self, resource_name):
         try:
-            scaler_path = self.__get_file_path(SCALER_NAME)
-            info_message = "Successfully loaded scaler from path {0}".format(scaler_path)
+            resource_path = self.__get_file_path(resource_name)
+            info_message = "Successfully loaded resource from path {0}".format(resource_path)
             logging.info(info_message)
-            print(scaler_path)
-            return pickle.load(open(scaler_path, 'rb'))
+            return pickle.load(open(resource_path, 'rb'))
         except Exception:
-            error_message = "Unable to load scaler from path {0}".format(scaler_path)
-            logging.exception(error_message)
-            raise ModelException(error_message)
-
-    def __load_tokenizer(self):
-        try:
-            tokenizer_path = self.__get_file_path(TOKENIZER_NAME)
-            info_message = "Successfully loaded tokenizer from path {0}".format(tokenizer_path)
-            logging.info(info_message)
-            print(tokenizer_path)
-            return pickle.load(open(tokenizer_path, 'rb'))
-        except Exception:
-            error_message = "Unable to load tokenizer from path {0}".format(tokenizer_path)
-            logging.exception(error_message)
-            raise ModelException(error_message)
-
-    def __load_encoder(self):
-        try:
-            encoder_path = self.__get_file_path(ENCODER_NAME)
-            info_message = "Successfully loaded encoder from path {0}".format(encoder_path)
-            logging.info(info_message)
-            print(encoder_path)
-            return pickle.load(open(encoder_path, 'rb'))
-        except Exception:
-            error_message = "Unable to load scaler from path {0}".format(encoder_path)
+            error_message = "Unable to load resources from path {0}".format(resource_path)
             logging.exception(error_message)
             raise ModelException(error_message)
 

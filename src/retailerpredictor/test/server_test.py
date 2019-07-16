@@ -12,14 +12,16 @@ class FalconTestCase(testing.TestCase):
 
 class ServerTest(FalconTestCase):
     def testGet(self):
-        response = self.simulate_get('/predict/', query_string='retailer=Boots')
+        response = self.simulate_get('/predict/', query_string='retailer=Boots UK')
 
-        print(response)
+        print(response.text)
         self.assertEquals(falcon.HTTP_OK, response.status)
+        self.assertEquals('Boots', response.text)
 
 
     def testGetH(self):
         response = self.simulate_get('/predict/', query_string='retailer=Harrods')
 
-        print(response)
+        print(response.text)
         self.assertEquals(falcon.HTTP_OK, response.status)
+        self.assertEquals('Harrods', response.text)
