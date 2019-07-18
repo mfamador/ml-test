@@ -9,3 +9,4 @@ scikit-learn==0.21.2
 gevent==1.4.0
 falcon==1.4.1
 gunicorn==19.9.0
+jupyter==1.0.0

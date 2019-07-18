@@ -20,7 +20,7 @@ class ServerTest(FalconTestCase):
 
 
     def testGetH(self):
-        response = self.simulate_get('/predict/', query_string='retailer=Harrods')
+        response = self.simulate_get('/predict/', query_string='retailer=Harrods Inc')
 
         print(response.text)
         self.assertEquals(falcon.HTTP_OK, response.status)

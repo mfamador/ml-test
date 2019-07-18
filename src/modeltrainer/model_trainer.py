@@ -24,11 +24,11 @@ def train_and_save_model(dataset,
     dataset = dataset.filter(['retailerName', 'rawData'])
     dataset.retailerName = dataset.retailerName.str.replace('Boots.*', 'Boots', regex=True)
     cleaned_ds = dataset[dataset.rawData.apply(lambda x: isinstance(x, str))]
-    result = cleaned_ds.rawData.apply(json.loads).apply(pd.Series)
-    joined = dataset.join(result)
+    parsed_raw_data = cleaned_ds.rawData.apply(json.loads).apply(pd.Series)
+    joined = dataset.join(parsed_raw_data)
     dataset = joined.filter(['retailerName', 'result'])
-    json_result = dataset.result.apply(pd.Series)
-    joined = dataset.join(json_result)
+    parsed_result = dataset.result.apply(pd.Series)
+    joined = dataset.join(parsed_result)
 
     # filter so that we get only features and labels to train the model
     dataset = joined.filter(['establishment', 'retailerName'])
@@ -68,7 +68,7 @@ def train_and_save_model(dataset,
     model = Sequential()
     model.add(Dense(512, input_shape=(max_words,)))
     model.add(Activation('relu'))
-    model.add(Dropout(0.5))
+    model.add(Dropout(0.25))
     model.add(Dense(num_classes))
     model.add(Activation('softmax'))
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
@@ -80,8 +80,7 @@ def train_and_save_model(dataset,
               validation_split=0.1)
     # evaluate the accuracy
     score = model.evaluate(x_test, y_test, batch_size=batch_size, verbose=1)
-    print('Test score:', score[0])
-    print('Test accuracy:', score[1])
+    print('Test accuracy: {0:.2f}%'.format(score[1] * 100))
 
     text_labels = encoder.classes_
     for i in range(10):
