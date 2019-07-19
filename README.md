@@ -1,8 +1,4 @@
-# Machine Learning tests
-
-The goal is to reliably predict the retailer name based on receipt ocr raw textual data. 
-The raw retailer name comes on the `establishment` inside the `rawData` field. 
-The values in `establishment` may came in different flavors (i.e. Boots vs Boots UK) and we want that the predicted value be unique (Boots).
+# Machine Learning experiments
 
 ## Install requirements
 
