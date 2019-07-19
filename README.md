@@ -23,7 +23,7 @@ or
 
 ### Run gunicorn server locally:
 
-PYTHONPATH=src/retailerpredictor gunicorn -c gunicorn.cfg app:app 
+    PYTHONPATH=src/retailerpredictor gunicorn -c gunicorn.cfg app:app 
     
 ### Run gunicorn server with docker:
 
