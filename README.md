@@ -4,17 +4,15 @@ The goal is to reliably predict the retailer name based on receipt ocr raw textu
 The raw retailer name comes on the `establishment` inside the `rawData` field. 
 The values in `establishment` may came in different flavors (i.e. Boots vs Boots UK) and we want that the predicted value be unique (Boots).
 
-This is a classical Text Classification (a.k.a. text categorization or text tagging) problem which is the process of assigning tags or categories to text according to its content.
-In order to train our prediction model I used the `retailName` in the provided dataset as labels and the raw `establishment` field as the input features.
-
 ## Install requirements
 
     pip3.6 install -r requirements.txt 
 
-## Jupyter notebook to analyse the dataset
-
-I used the following jupyter notebook to anayse the dataset and create the
-    jupyter notebook notebook/scenario_1.ipynb
+## Jupyter notebooks to analyse the dataset and create the model for the different scenarios:
+    
+    [notebook/scenario_1.ipynb](scenario 1)
+    
+    [notebook/scenario_3.ipynb](scenario 3)
 
 ## Train and save the model
 
