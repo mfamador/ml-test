@@ -30,3 +30,7 @@ or
     ./2-build-docker-image.sh
     ./3-start-dockercontainer.sh
 
+### Test a prediction
+
+    curl 'http://localhost:8080/predict?retailer=boots%20uk'
+   
