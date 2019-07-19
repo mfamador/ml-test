@@ -6,9 +6,9 @@
 
 ## Jupyter notebooks to analyse the dataset and create the model for the different scenarios:
     
-[scenario_1.ipynb](notebook/scenario_3.ipynb)
+[multi-label-text-classification.ipynb](notebook/multi-label-text-classification.ipynb)
 
-[scenario_3.ipynb](notebook/scenario_3.ipynb)
+[time-series-prediction-LSTM.ipynb.ipynb](notebook/time-series-prediction-LSTM.ipynb)
 
 ## Train and save the model
 
