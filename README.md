@@ -28,15 +28,11 @@ or
    Run predictor service
 
 ### Run gunicorn server locally:
-    PYTHONPATH=src/retailerpredictor gunicorn -c gunicorn.cfg app:app 
-    
 
+PYTHONPATH=src/retailerpredictor gunicorn -c gunicorn.cfg app:app 
+    
 ### Run gunicorn server with docker:
+
     ./2-build-docker-image.sh
     ./3-start-dockercontainer.sh
- 
 
-### Run gunicorn server locally:
-    ./3-start-gunicorn-server.sh
- 
-   
