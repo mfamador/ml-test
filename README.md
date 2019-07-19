@@ -10,9 +10,9 @@ The values in `establishment` may came in different flavors (i.e. Boots vs Boots
 
 ## Jupyter notebooks to analyse the dataset and create the model for the different scenarios:
     
-    [notebook/scenario_1.ipynb](scenario 1)
+[notebook/scenario_1.ipynb](scenario 1)
     
-    [notebook/scenario_3.ipynb](scenario 3)
+[notebook/scenario_3.ipynb](scenario 3)
 
 ## Train and save the model
 
