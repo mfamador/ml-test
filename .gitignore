@@ -4,3 +4,4 @@ ml-test-marco.iml
 /model/.ipynb_checkpoints/
 /notebook/.ipynb_checkpoints/
 __pycache__
+.gradle
