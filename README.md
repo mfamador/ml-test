@@ -28,7 +28,7 @@ or
 ### Run gunicorn server with docker:
 
     ./2-build-docker-image.sh
-    ./3-start-dockercontainer.sh
+    ./3-start-docker-container.sh
 
 ### Test a prediction
 
